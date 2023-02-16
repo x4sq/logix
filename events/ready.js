@@ -1,8 +1,22 @@
 const { ActivityType } = require('discord.js');
 const client = require('..');
 const chalk = require('chalk');
+const mongoose = require('mongoose')
+const srv = process.env.MONGO_SRV
 
 client.on("ready", () => {
+	if(!srv) return;
+	mongoose.set('strictQuery', true);
+	mongoose.connect(srv || '', {
+		keepAlive: true,
+		useNewUrlParser: true,
+		useUnifiedTopology: true
+	})
+	if(mongoose.connect){
+		console.log(chalk.green('MongoDB started'))
+	}
+
+
 	const activities = [
 		{ name: `${client.users.cache.size} Users`, type: ActivityType.Watching }
 	];
