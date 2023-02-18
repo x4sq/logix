@@ -2,7 +2,7 @@ const { model, Schema } = require('mongoose')
 
 let balSchema = new Schema({
     UserID: String,
-    Balance: String,
+    Balance: Number,
     ClaimedDaily: Boolean
 })
 

@@ -1,24 +1,34 @@
-const { ApplicationCommandType } = require('discord.js');
+const { ApplicationCommandType, EmbedBuilder } = require('discord.js');
 const balSchema = require('../../schemas/balance')
-const db = require('quick.db')
+const math = require('mathjs')
+const mongo = require('mongoose');
 
 module.exports = {
 	name: 'daily',
 	description: "Claim your 25M daily gems.",
 	type: ApplicationCommandType.ChatInput,
-	cooldown: 3000,
+	cooldown: 86400000,
 	run: async (client, interaction) => {
-        const user = interaction.user
-		let time = 86400000
-        let amount = 25000000
-        let daily = await db.get(`daily_${user.id}`)
+		balSchema.findOne({ UserID: interaction.user.id }, async (err, data) =>{
+            if(err) throw err;
 
-        let duration = ms(time - (Date.now() - daily), { long: true});
-
-        if(daily !== null && time - (Date.now() - daily) > 0){
-            interaction.reply({ content: `You will be able to claim your daily reward after \`${duration}\`** `, ephemeral: true })
-        } else {
-
-        }
+			if(!data){
+                await balSchema.create({
+                    UserID: interaction.user.id,
+                    Balance: 0
+                })
+			}
+				let bal = data.Balance
+				const yes = math.evaluate(`${bal} + 25000000`)
+				data.Balance = yes
+				await data.save()
+				const success = new EmbedBuilder()
+				.setColor('DarkButNotBlack')
+				.setDescription(`Successfully claimed your daily **25.0m**, run this again in 24 hours to claim.\n\nNew balance: ${yes}`)
+				.setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
+				return interaction.reply({ embeds: [success], ephemeral: true })
+            }
+		
+		)
 	}
-};
+}

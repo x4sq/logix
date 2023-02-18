@@ -1,5 +1,6 @@
 const { ApplicationCommandType, EmbedBuilder } = require('discord.js');
 const balSchema = require('../../schemas/balance')
+const mongo = require('mongoose');
 
 module.exports = {
 	name: 'bal',
@@ -21,7 +22,11 @@ module.exports = {
                 .setFooter({ text: `Create a ticket if this was an error. ID: ${interaction.user.id}`})
                 return interaction.reply({embeds: [newSchemaEmbed], ephemeral: true})
             }
-
+            if(claimedCache.includes(interaction.user.id)){
+                console.log('returning from cache')
+                interaction.reply('You have already claimed your daily rewards.')
+                return
+            }
             if(data){
                 const bal = data.Balance
                 const user = data.UserID

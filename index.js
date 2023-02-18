@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const client = new Client({
+	ws: { properties: { browser: "Discord iOS"}},
 	intents: [
 		GatewayIntentBits.Guilds, 
 		GatewayIntentBits.GuildMessages, 
