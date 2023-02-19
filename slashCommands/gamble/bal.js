@@ -1,6 +1,7 @@
 const { ApplicationCommandType, EmbedBuilder } = require('discord.js');
 const balSchema = require('../../schemas/balance')
 const mongo = require('mongoose');
+const shortNumber = require('short-number');
 
 module.exports = {
 	name: 'bal',
@@ -12,30 +13,27 @@ module.exports = {
             if(err) throw err;
 
             if(!data){
-                balSchema.create({
+                await balSchema.create({
                     UserID: interaction.user.id,
                     Balance: 0
                 })
-                const newSchemaEmbed = new EmbedBuilder()
+                const user = interaction.user.id
+                const embed = new EmbedBuilder()
                 .setColor('DarkButNotBlack')
-                .setDescription('No data found. Creating you a new schema... Please re-run this command if you wish to see your balance.')
-                .setFooter({ text: `Create a ticket if this was an error. ID: ${interaction.user.id}`})
-                return interaction.reply({embeds: [newSchemaEmbed], ephemeral: true})
+                .setDescription(`Your balance is: **0** gems.`)
+                .setFooter({ text: `ID: ${user}`})
+                return interaction.reply({ embeds: [embed] })
             }
-            if(claimedCache.includes(interaction.user.id)){
-                console.log('returning from cache')
-                interaction.reply('You have already claimed your daily rewards.')
-                return
-            }
-            if(data){
-                const bal = data.Balance
+            
+            const bal = await data.Balance
+            const num2 = parseInt(bal, 10)
+            const num = shortNumber(num2)
                 const user = data.UserID
                 const embed = new EmbedBuilder()
                 .setColor('DarkButNotBlack')
-                .setDescription(`Your balance is: ${bal} gems.`)
+                .setDescription(`Your balance is: **${num}** gems.`)
                 .setFooter({ text: `ID: ${user}`})
-                interaction.reply({ embeds: [embed] })
-            }
+                return interaction.reply({ embeds: [embed] })
         })
 	}
 };

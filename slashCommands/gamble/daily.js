@@ -2,6 +2,7 @@ const { ApplicationCommandType, EmbedBuilder } = require('discord.js');
 const balSchema = require('../../schemas/balance')
 const math = require('mathjs')
 const mongo = require('mongoose');
+const shortNumber = require('short-number');
 
 module.exports = {
 	name: 'daily',
@@ -24,7 +25,7 @@ module.exports = {
 				await data.save()
 				const success = new EmbedBuilder()
 				.setColor('DarkButNotBlack')
-				.setDescription(`Successfully claimed your daily **25.0m**, run this again in 24 hours to claim.\n\nNew balance: ${yes}`)
+				.setDescription(`Successfully claimed your daily **25.0m**, run this again in 24 hours to claim.\n\nNew balance: **${shortNumber(yes)}**`)
 				.setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
 				return interaction.reply({ embeds: [success], ephemeral: true })
             }

@@ -1,8 +1,8 @@
-const { model, Schema } = require('mongoose')
+const { model, Schema, mongoose } = require('mongoose')
 
 let balSchema = new Schema({
     UserID: String,
-    Balance: Number,
+    Balance: String,
     ClaimedDaily: Boolean
 })
 

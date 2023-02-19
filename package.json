@@ -13,12 +13,16 @@
     "@discordjs/rest": "^1.5.0",
     "ascii-table": "^0.0.9",
     "chalk": "^2.4.1",
+    "deabbreviate-number": "^1.0.0",
     "discord-api-types": "^0.37.33",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
+    "is-whole-number": "^1.1.0",
+    "js-abbreviation-number": "^1.4.0",
     "mathjs": "^11.5.1",
     "mongoose": "^6.9.1",
-    "ms": "^2.1.3"
+    "ms": "^2.1.3",
+    "short-number": "^1.0.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
