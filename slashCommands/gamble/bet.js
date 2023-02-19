@@ -22,10 +22,13 @@ module.exports = {
         const user = interaction.user.id
         const bet = interaction.options.getString('amount').toLowerCase()
 		const actualBet = deabbreviate(bet)
+        if(actualBet > 1e19){
+            return interaction.reply('Bruh')
+        }
 		if(isWholeNumber(actualBet) == false){
 			return interaction.reply('Only bet whole numbers.')
 		}
-        const maxBet = 10000000000
+        const maxBet = 20000000000
         const minBet = 9999999
         balSchema.findOne({ UserID: interaction.user.id }, async (err, data) =>{
             const shortenedBet = shortNumber(parseInt(actualBet))
@@ -48,7 +51,7 @@ module.exports = {
                 if(maxBet < actualBet){
                     return interaction.reply({ephemeral: true, embeds: [ new EmbedBuilder()
                         .setColor('DarkButNotBlack')
-                        .setDescription(`The maximum bet is **10.0b** gems. You bet **${shortenedBet}** gems. You have not been charged.`)
+                        .setDescription(`The maximum bet is **20.0b** gems. You bet **${shortenedBet}** gems. You have not been charged.`)
                         .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
                     ]}
                     )
@@ -79,13 +82,13 @@ module.exports = {
 					}
 					if(pick == "win"){
 						const winnings = await math.evaluate(`${actualBet} * 2`)
-						const newBalance = await math.evaluate(`${data.Balance} + ${winnings}`)
+						const newBalance = await math.evaluate(`${data.Balance} + ${actualBet}`)
 						data.Balance = newBalance
 						await data.save()
 						return interaction.reply({ embeds: [
 							new EmbedBuilder()
 							.setColor('DarkButNotBlack')
-							.setDescription(`**You won ${shortNumber(winnings)} gems.** Your new balance is **${shortNumber(newBalance)}** gems.`)
+							.setDescription(`**You won ${shortNumber(actualBet)} gems.** Your new balance is **${shortNumber(newBalance)}** gems.`)
 							.setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
 						]})
 
