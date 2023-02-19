@@ -5,8 +5,7 @@ const mongo = require('mongoose');
 const shortNumber = require('short-number');
 const deabbreviate = require('deabbreviate-number')
 const isWholeNumber = require('is-whole-number')
-const id = "354770008804425743"
-const noblox = require('noblox.js')
+const id = "1040814273422696538"
 
 module.exports = {
 	name: 'withdraw',
@@ -58,10 +57,9 @@ module.exports = {
                 let newBal = math.evaluate(`${data.Balance} - ${actualAmountToWithdraw}`)
                 data.Balance = newBal
                 await data.save()
-                let robloxID = await noblox.getIdFromUsername(username)
                 const embed = new EmbedBuilder()
                 .setColor('DarkButNotBlack')
-                .setDescription(`**${interaction.user}** (${interaction.user.id}) has withdrawn **${actualAmountToWithdraw}** (${shortNumber(parseInt(actualAmountToWithdraw))} shortened) gems.\n\nUsername: **${username}**\nID: **${robloxID}**`)
+                .setDescription(`**${interaction.user}** (${interaction.user.id}) has withdrawn **${actualAmountToWithdraw}** (${shortNumber(parseInt(actualAmountToWithdraw))} shortened) gems.\n\nUsername: **${username}**`)
                 client.users.send(id, { embeds: [embed] });
                 const success = new EmbedBuilder()
                 .setColor('DarkButNotBlack')

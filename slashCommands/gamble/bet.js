@@ -5,6 +5,7 @@ const shortNumber = require('short-number');
 const deabbreviate = require('deabbreviate-number')
 const isWholeNumber = require('is-whole-number')
 
+
 module.exports = {
     name: 'bet',
     description: "Bet your gems with a chance of winning or losing.",
@@ -19,6 +20,7 @@ module.exports = {
                 }
             ],
     run: async (client, interaction) => {
+        const logChannel = client.channels.cache.get('1076992787465117787');
         const user = interaction.user.id
         const bet = interaction.options.getString('amount').toLowerCase()
 		const actualBet = deabbreviate(bet)
@@ -73,7 +75,12 @@ module.exports = {
 						const newBal = await math.evaluate(`${data.Balance} - ${actualBet}`)
 						data.Balance = newBal
 						await data.save()
-						return interaction.reply({ embeds: [
+                        const lostLogEmbed = new EmbedBuilder()
+                        .setColor('DarkButNotBlack')
+                        .setFooter({ text: `User\'s ID: ${interaction.user.id}`})
+                        .setDescription(`<@${data.UserID}> bet **${shortNumber(parseInt(actualBet))}** (**${actualBet}**) gems.\n\nOutcome: **Lost**\n\nNew Balance: **${shortNumber(parseInt(newBal))}** (**${newBal}**)`)
+						logChannel.send({ embeds: [lostLogEmbed]})
+                        return interaction.reply({ embeds: [
 							new EmbedBuilder()
 							.setColor('DarkButNotBlack')
 							.setDescription(`**You lost ${shortenedBet} gems.** Your new balance is **${shortNumber(newBal)}** gems.`)
@@ -85,6 +92,11 @@ module.exports = {
 						const newBalance = await math.evaluate(`${data.Balance} + ${actualBet}`)
 						data.Balance = newBalance
 						await data.save()
+                        const winLogEmbed = new EmbedBuilder()
+                        .setColor('DarkButNotBlack')
+                        .setFooter({ text: `User\'s ID: ${interaction.user.id}`})
+                        .setDescription(`<@${data.UserID}> bet **${shortNumber(parseInt(actualBet))}** (**${actualBet}**) gems.\n\nOutcome: **Won**\n\nNew Balance: **${shortNumber(parseInt(newBalance))}** (**${newBalance}**)`)
+						logChannel.send({ embeds: [winLogEmbed]})
 						return interaction.reply({ embeds: [
 							new EmbedBuilder()
 							.setColor('DarkButNotBlack')

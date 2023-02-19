@@ -25,7 +25,7 @@ module.exports = {
 				await data.save()
 				const success = new EmbedBuilder()
 				.setColor('DarkButNotBlack')
-				.setDescription(`Successfully claimed your daily **25.0m**, run this again in 24 hours to claim.\n\nNew balance: **${shortNumber(yes)}**`)
+				.setDescription(`Successfully claimed your daily **25.0m**, run this again in 24 hours to claim.\n\nNew balance: **${shortNumber(yes).toLowerCase()}**`)
 				.setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
 				return interaction.reply({ embeds: [success], ephemeral: true })
             }

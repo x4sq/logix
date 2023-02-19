@@ -31,10 +31,20 @@ module.exports = {
         const amount = interaction.options.getString('amount')
         const actualAmountToGift = deabbreviate(amount)
         if(userToGiftTo.id == interaction.user.id){
-            return interaction.reply('Stop trying to gift to yourself stupid head')
+            return interaction.reply({ embeds: [
+                new EmbedBuilder()
+                .setColor('DarkButNotBlack')
+                .setDescription(`You cannot gift to yourself.`)
+                .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
+            ], ephemeral: true })
         }
         if(actualAmountToGift > 1e19){
-            return interaction.reply('Bruh')
+            return interaction.reply({ embeds: [
+                new EmbedBuilder()
+                .setColor('DarkButNotBlack')
+                .setDescription(`Gift value must be under 1e18.`)
+                .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
+            ], ephemeral: true })
         }
         balSchema.findOne({ UserID: interaction.user.id }, async (err, data) =>{
             if(err) throw err;
@@ -44,13 +54,28 @@ module.exports = {
                     UserID: interaction.user.id,
                     Balance: 0
                 })
-                return interaction.reply('Who you gifting with no gems?')
+                return interaction.reply({ embeds: [
+                    new EmbedBuilder()
+                    .setDescription(`Insufficient balance. Your current balance is **${shortNumber(parseInt(balance))}** gems.`)
+                    .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
+                    .setColor('DarkButNotBlack')
+                ], ephemeral: true })
 			}
             if(actualAmountToGift < 0){
-                return interaction.reply('Stop trying to take this poor guy\'s coins...')
+                return interaction.reply({ embeds: [
+                    new EmbedBuilder()
+                    .setColor('DarkButNotBlack')
+                    .setDescription(`Gift value must be greater than 0.`)
+                    .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
+                ]})
             }
             if(isWholeNumber(actualAmountToGift) == false){
-                return interaction.reply('Only gift whole numbers.')
+                return interaction.reply({ embeds: [
+                    new EmbedBuilder()
+                    .setColor('DarkButNotBlack')
+                    .setDescription(`Gift value must be a whole number.`)
+                    .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
+                ]})
             }
             if(data){
                 let balance = data.Balance
