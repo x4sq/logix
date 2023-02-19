@@ -6,8 +6,8 @@ const deabbreviate = require('deabbreviate-number')
 const isWholeNumber = require('is-whole-number')
 
 module.exports = {
-    name: 'spin',
-    description: "Spin your gems with a chance of winning or losing.",
+    name: 'bet',
+    description: "Bet your gems with a chance of winning or losing.",
     type: ApplicationCommandType.ChatInput,
     cooldown: 1000,
     options: [
