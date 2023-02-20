@@ -36,6 +36,10 @@ module.exports = {
                 .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
             ], ephemeral: true })
         }
+
+        if(actualAmountToGift < 1000){
+            return interaction.reply({ content: 'Must gift more than **1k** gems.', ephemeral: true })
+        }
         if(actualAmountToGift > 1e19){
             return interaction.reply({ embeds: [
                 new EmbedBuilder()
@@ -90,13 +94,13 @@ module.exports = {
                         if(!data2){
                             await balSchema.create({
                                 UserID: userToGiftTo.id,
-                                Balance: 0
+                                Balance: actualAmountToGift
                             })
                         }
                         let newBal = math.evaluate(`${balance} - ${actualAmountToGift}`)
                         data.Balance = newBal
                         await data.save()
-                        let doneeNewBal = math.evaluate(`${data2.Balance} + ${actualAmountToGift}`)
+                        let doneeNewBal = math.evaluate(`${await data2.Balance} + ${actualAmountToGift}`)
                         data2.Balance = doneeNewBal
                         await data2.save()
                         return interaction.reply({ embeds: [

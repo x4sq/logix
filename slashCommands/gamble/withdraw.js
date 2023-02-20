@@ -36,10 +36,10 @@ module.exports = {
         if(isWholeNumber(actualAmountToWithdraw) == false){
             return interaction.reply('Only gift whole numbers.')
         }
-        const insufficientEmbed = new EmbedBuilder()
-        .setDescription(`Insufficient balance. Your current balance is **0** gems.`)
-        .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
-        .setColor('DarkButNotBlack')
+
+
+
+
         balSchema.findOne({ UserID: interaction.user.id }, async (err, data) =>{
             if(err) throw err;
 
@@ -48,12 +48,16 @@ module.exports = {
                     UserID: interaction.user.id,
                     Balance: 0
                 })
+                return interaction.reply('bruh')
+            }
+            if(data.Balance < actualAmountToWithdraw){
+                const insufficientEmbed = new EmbedBuilder()
+                .setDescription(`Insufficient balance. Your current balance is **${shortNumber(parseInt(data.Balance))}** gems.`)
+                .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
+                .setColor('DarkButNotBlack')
                 return interaction.reply({ embeds: [insufficientEmbed] })
             }
-            if(data.Balance < amount){
-                return interaction.reply({ embeds: [insufficientEmbed] })
-            }
-            if(data.Balance >= amount){
+            if(data.Balance >= actualAmountToWithdraw){
                 let newBal = math.evaluate(`${data.Balance} - ${actualAmountToWithdraw}`)
                 data.Balance = newBal
                 await data.save()

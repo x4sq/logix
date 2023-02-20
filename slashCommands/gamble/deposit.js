@@ -47,14 +47,15 @@ module.exports = {
 			if(!data){
                 await balSchema.create({
                     UserID: user.id,
-                    Balance: 0
+                    Balance: actualAmount
                 })
+                return interaction.reply({ content: `Gave ${shortNumber(parseInt(actualAmount))} to ${user}`})
 			}
 
             let newBal = math.evaluate(`${data.Balance} + ${actualAmount}`)
             data.Balance = newBal
             await data.save()
-            return interaction.reply({ content: `Gave ${shortNumber(parseInt(actualAmount))} to ${user}`, ephemeral: true})
+            return interaction.reply({ content: `Gave ${shortNumber(parseInt(actualAmount))} to ${user}`})
 
         
         
