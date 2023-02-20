@@ -5,8 +5,6 @@ const mongo = require('mongoose');
 const shortNumber = require('short-number');
 const deabbreviate = require('deabbreviate-number')
 const isWholeNumber = require('is-whole-number')
-const id = 354770008804425743
-
 module.exports = {
 	name: 'gift',
 	description: "Send your friends gifts of gems!",

@@ -20,7 +20,7 @@ module.exports = {
                 }
             ],
     run: async (client, interaction) => {
-        const logChannel = client.channels.cache.get('1076992787465117787');
+        const logChannel = client.channels.cache.get('1077048370578849812');
         const user = interaction.user.id
         const bet = interaction.options.getString('amount').toLowerCase()
 		const actualBet = deabbreviate(bet)
