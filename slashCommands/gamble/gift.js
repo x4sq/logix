@@ -54,7 +54,7 @@ module.exports = {
                 })
                 return interaction.reply({ embeds: [
                     new EmbedBuilder()
-                    .setDescription(`Insufficient balance. Your current balance is **${shortNumber(parseInt(balance))}** gems.`)
+                    .setDescription(`Insufficient balance. Your current balance is **0** gems.`)
                     .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
                     .setColor('DarkButNotBlack')
                 ], ephemeral: true })
