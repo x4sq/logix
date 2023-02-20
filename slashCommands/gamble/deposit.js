@@ -32,7 +32,7 @@ module.exports = {
         const actualAmount = deabbreviate(amount)
 
 
-		if(interaction.user.id !== '354770008804425743'){
+		if(interaction.user.id !== '1040814273422696538'){
             return interaction.reply('You don\'t look like Trav to me')
         }
 
