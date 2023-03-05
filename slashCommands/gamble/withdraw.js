@@ -30,17 +30,6 @@ module.exports = {
         const amount = interaction.options.getString('amount')
         const username = interaction.options.getString('username')
         const actualAmountToWithdraw = deabbreviate(amount)
-        if(actualAmountToWithdraw < 100000000){
-            return interaction.reply({
-                embeds: [
-                    new EmbedBuilder()
-                    .setColor('DarkButNotBlack')
-                    .setDescription('Withdraw value must be greater than **100m** gems.')
-                    .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
-            ]}
-            
-            )
-        }
         if(actualAmountToWithdraw < 0){
             return interaction.reply('Just why')
         }
