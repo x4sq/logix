@@ -1,9 +1,9 @@
 const { model, Schema, mongoose } = require('mongoose')
 
-let balSchemaTEST = new Schema({
+let balSchema = new Schema({
     UserID: String,
     Balance: String,
     ClaimedDaily: Boolean
 })
 
-module.exports = model('balSchemaTest', balSchemaTEST)
+module.exports = model('balSchema', balSchema)
