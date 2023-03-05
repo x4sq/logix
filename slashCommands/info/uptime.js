@@ -11,7 +11,7 @@ module.exports = {
           new EmbedBuilder()
           .setColor('DarkButNotBlack')
           .setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
-          .setDescription(`Bot has been up since <t:${Math.round(seconds - process.uptime())}:R>`)
+          .setDescription(`**Logix Gambling** has been up since <t:${Math.round(seconds - process.uptime())}:R>`)
         ]
       })
     }
