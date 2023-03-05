@@ -16,15 +16,11 @@ module.exports = {
 			if(!data){
                 await balSchema.create({
                     UserID: interaction.user.id,
-                    Balance: 25000000
+                    Balance: 0
                 })
-				const success2 = new EmbedBuilder()
-				.setColor('DarkButNotBlack')
-				.setDescription(`Successfully claimed your daily **25.0m**, run this again in 24 hours to claim.\n\nNew balance: **25.0m**`)
-				.setFooter({ text:  `Create a ticket if this was an error. ID: ${interaction.user.id}` })
-				return interaction.reply({ embeds: [success2], ephemeral: true })
 			}
-				let yes = math.evaluate(`${data.Balance} + 25000000`)
+				let bal = data.Balance
+				const yes = math.evaluate(`${bal} + 25000000`)
 				data.Balance = yes
 				await data.save()
 				const success = new EmbedBuilder()
