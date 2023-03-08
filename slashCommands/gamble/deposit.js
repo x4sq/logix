@@ -33,7 +33,7 @@ module.exports = {
         const actualAmount = deabbreviate(amount)
 
 
-		if(interaction.user.id !== ids){
+		if(interaction.user.id.includes(ids) == false){
             return interaction.reply('You don\'t look like Trav to me')
         }
 
