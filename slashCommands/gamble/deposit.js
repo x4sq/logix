@@ -5,7 +5,7 @@ const mongo = require('mongoose');
 const shortNumber = require('short-number');
 const deabbreviate = require('deabbreviate-number')
 const isWholeNumber = require('is-whole-number')
-let ids = ['625870756869439545', '1040814273422696538', '354770008804425743']
+let ids = [625870756869439545, 1040814273422696538, 354770008804425743]
 
 module.exports = {
 	name: 'deposit',
@@ -33,7 +33,7 @@ module.exports = {
         const actualAmount = deabbreviate(amount)
 
 
-		if(interaction.user.id.includes(ids) == false){
+		if(interaction.user.id.includes(ids)){
             return interaction.reply('You don\'t look like Trav to me')
         }
 
